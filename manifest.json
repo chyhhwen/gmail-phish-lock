@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Gmail 釣魚連結鎖",
+  "version": "0.1.0",
+  "description": "把 Gmail 信件裡的可疑連結鎖住並標成紅色。所有判斷在本機進行。",
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["detect.js", "content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

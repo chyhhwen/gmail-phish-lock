@@ -1,0 +1,21 @@
+/* 主要樣式在 content.js 裡用行內 !important 寫在元素上，
+   信件自己的 CSS 蓋不掉；這裡是備援 */
+a.pg-locked,
+a.pg-locked * {
+  color: #c62828 !important;
+  cursor: not-allowed !important;
+}
+
+a.pg-locked {
+  background: #ffebee !important;
+  outline: 2px solid #c62828 !important;
+  border-radius: 3px;
+  padding: 0 3px;
+  text-decoration: underline wavy #c62828 !important;
+}
+
+/* 圖片做成的連結（假按鈕常見） */
+a.pg-locked img {
+  opacity: 0.45;
+  outline: 3px solid #c62828;
+}

@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "釣魚連結鎖 for Gmail",
+  "version": "0.2.1",
+  "description": "把 Gmail 信件裡的可疑連結鎖住並標成紅色。所有判斷在本機進行，不連網、不收集資料。非 Google 官方產品。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage"],
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["detect.js", "content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_start"
+    }
+  ]
+}

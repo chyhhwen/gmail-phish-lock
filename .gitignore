@@ -1,0 +1,5 @@
+# 打包產出：上傳到 GitHub Releases，不進 repo
+dist/
+
+# 量測用的釣魚網址清單：只放在沙盒，絕不能 commit
+tests/data/

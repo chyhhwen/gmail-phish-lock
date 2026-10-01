@@ -11,7 +11,7 @@
 | `promo-440x280.png` | 商店資訊分頁 → 小型宣傳圖塊 |
 | `privacy-policy.html` | 放到公司網站，網址填在隱私權分頁 |
 
-要上傳的套件是另外那個 **`gmail-phish-lock-extension-v0.2.1.zip`**，它的 `manifest.json` 在 zip 最外層。
+要上傳的套件是 **`gmail-phish-lock-extension-v0.2.1.zip`**，它的 `manifest.json` 在 zip 最外層。可以從 GitHub Releases 下載，也可以在原始碼根目錄跑 `node scripts/build-release.js` 打包，檔案會產生在 `dist/`。
 
 截圖裡的郵件畫面是模擬的，紅色鎖定和右側卡片上的原因，都是插件實際判斷的結果。想換成真的 Gmail 截圖也可以，但畫面上不要出現任何真實信件。
 
@@ -138,6 +138,8 @@
 
 ## 七、之後要更新時
 
-1. 修改 `extension/manifest.json` 的 `version`，一定要比上一版大，例如 `0.2.1` → `0.2.2`。
-2. 重新打包 zip，`manifest.json` 要在 zip 最外層。
-3. 後台上傳新版套件並提交審查。**每次更新都要重新審查**，審查通過後會自動更新到每位同仁的瀏覽器。
+1. 改版本號。下面兩處要一致，而且一定要比上一版大，例如 `0.2.1` → `0.2.2`：
+   - `extension/manifest.json` 的 `version`
+   - `extension/detect.js` 的 `VERSION`
+2. 在原始碼根目錄跑 `node scripts/build-release.js` 打包。版本號不一致、檔案缺漏或編碼不對，它會直接失敗並說明原因。
+3. 後台上傳 `dist/` 裡的新 zip 並提交審查。**每次更新都要重新審查**，審查通過後會自動更新到每位同仁的瀏覽器。

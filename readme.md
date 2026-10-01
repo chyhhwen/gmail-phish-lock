@@ -10,6 +10,7 @@
 |---|---|
 | `extension/` | 插件本體，Chrome 載入這個資料夾 |
 | `store-listing/` | 上架素材與步驟，從 `PUBLISH.md` 開始看 |
+| `scripts/build-release.js` | 打包要上傳到 GitHub Releases 的檔案 |
 | `tests/unit.js` | 判斷規則的單元測試 |
 | `tests/e2e.js`、`tests/run-e2e.sh` | 用真的 Chromium 對假 Gmail 頁面實際點擊 |
 | `tests/measure.js` | 量偵測率與誤判率（資料不附，見「重現數字」） |
@@ -65,9 +66,16 @@
 
 ## 自己先試
 
+先拿到插件，二選一：
+
+- 從 [Releases](https://github.com/chyhhwen/gmail-phish-lock/releases) 下載 `gmail-phish-lock-extension-v<版本>.zip` 並解壓縮。不要下載「Source code」。
+- 直接用原始碼裡的 `extension` 資料夾。
+
+然後：
+
 1. Chrome 網址列打 `chrome://extensions`
 2. 打開右上角的「開發人員模式」
-3. 按「載入未封裝項目」，選 **`extension`** 資料夾（不是外層資料夾）
+3. 按「載入未封裝項目」，選**直接看得到 `manifest.json`** 的那個資料夾，不是它的上一層
 4. 重新整理 Gmail
 
 ## 部署給全公司
@@ -168,6 +176,27 @@ sh tests/run-e2e.sh
 ```
 unshare -n -- node tests/measure.js
 ```
+
+## 發佈新版到 GitHub Releases
+
+1. 改版本號。下面兩處要一致，而且要比上一版大：
+   - `extension/manifest.json` 的 `version`
+   - `extension/detect.js` 的 `VERSION`
+2. 在沙盒裡跑測試（見「測試」一節）。
+3. 打包：
+
+   ```
+   node scripts/build-release.js
+   ```
+
+   產出在 `dist/`：插件 zip 和 `SHA256SUMS.txt`。版本號不一致、manifest 用到的檔案不見、檔案不是 UTF-8，或 `extension/` 裡出現不認得的檔案，它都會直接失敗並說明原因。
+4. commit、push。
+5. GitHub → Releases → Draft a new release：
+   - tag 填 `v` 加版本號，例如 `v0.2.1`，從剛才的 commit 建立
+   - 上傳 `dist/` 裡的兩個檔案
+   - 發佈
+
+同一份原始碼不管在哪台電腦打包，zip 都一模一樣。所以任何人都能從 tag 重新打包，核對 SHA256 跟 Release 上的檔案是否相同。
 
 ## 已知限制
 
